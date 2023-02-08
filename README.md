@@ -1,54 +1,55 @@
-# Repositorio plantilla para la creación de nuevos módulos de Terraform
-Este repositorio tiene como finalidad, guiar en el proceso de creación de un nuevo módulo de Terraform, brindando indicaciones así como la estructura de archivos y carpetas que se deben contener para una correcta conexión y funcionalidad.
-
-## Uso e instalación
-Para la instalación deberá conectarse el repositorio con el registro privado de la organización de Terraform Cloud. Para ello deberá tenerse las siguientes consideraciones:
-* Usar esta plantilla para la estructura de archivos
-  * El repositorio en si mismo es el módulo.
-  * En caso emplee submódulos, estos ebdeberán cargarse en la carpeta submodules y cada uno contará con sus respectivos ejemplos.
-* Eliminar toda la información de guía desde la línea separadora hacia arriba, lo podrá identificar con el comentario "INICIO DE PLANTILLA DE DOCUMENTACIÓN" en el contenido del archivo Markdown.
-* El repositorio deberá tener la siguiente estructura en el nombre:
-  * terraform-_proveedor_-_nombre que se le dará al módulo sin guiones_
-* Para que sea funcional, deberá generar un nuevo _release_ usando _tags_ en Github
-  * Use [versiones de tipo semántica](https://semver.org/), por ejemplo: v1.0.0
-  * Para ello, ir a la página de _releases_ del repositorio ubicado en "/releases/new" y crear un nuevo _tag_
-    * Para nuevas versiones, siga la secuencia lógica de las versiones, por ejemplo: v1.0.0 > v1.0.1
-    * En el campo de título, el nombre del tag, por ejemplo: v1.0.0
-    * En el campo de descripción, indique los detalles de la nueva versión y los cambios efectuados.
-
-<!-- INICIO DE PLANTILLA DE DOCUMENTACIÓN -->
-
-# _Insertar el nombre del módulo_
-Agregar breve descripción del módulo y los recursos que creará.
+<!-- BEGIN_TF_DOCS -->
 
 ## Usage
 
 ```hcl
-Agregar el uso del módulo
+module "folders" {
+  source         = "orion-global/google_folder/gcp"
+  org            = "nombre_organización"
+  folders_parent = [carpeta_padre]
+  folders_child  = [sub_carpetas_1, sub_carpeta_2]
+}
 ```
-
-## Examples
-
-- [Ejemplo 01](https://github.com/orion-global/terraform-module-template/tree/prod/examples/example-001): Este es un primer ejemplo
 
 ## Requirements
 
-| Name      | Version  |
-| --------- | -------- |
-| terraform | >= X.X.X |
+| Name                                                                           | Version   |
+| ------------------------------------------------------------------------------ | --------- |
+| <a name="requirement_terraform"></a> [terraform](#requirement_terraform)       | >= 1.1.0  |
+| <a name="requirement_google"></a> [google](#requirement_google)                | >= 4.32.0 |
+| <a name="requirement_google-beta"></a> [google-beta](#requirement_google-beta) | >= 4.32.0 |
 
 ## Providers
 
-| Name | Version  |
-| ---- | -------- |
-| aws  | >= X.X.X |
+| Name                                                      | Version   |
+| --------------------------------------------------------- | --------- |
+| <a name="provider_google"></a> [google](#provider_google) | >= 4.32.0 |
 
 ## Modules
 
-| Name   | Source                           | Version |
-| ------ | -------------------------------- | ------- |
-| modulo | ./modules/eks-managed-node-group | n/a     |
+No modules.
 
-## License
+## Resources
 
-MIT Licensed. See [LICENSE](https://github.com/orion-global/terraform-module-template/tree/prod/LICENSE) for full details.
+| Name                                                                                                              | Type     |
+| ----------------------------------------------------------------------------------------------------------------- | -------- |
+| [google_folder.dir_child](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/folder)  | resource |
+| [google_folder.dir_parent](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/folder) | resource |
+
+## Inputs
+
+| Name                                                                              | Description | Type           | Default | Required |
+| --------------------------------------------------------------------------------- | ----------- | -------------- | ------- | :------: |
+| <a name="input_folders_child"></a> [folders_child](#input_folders_child)          | n/a         | `list(string)` | `[]`    |    no    |
+| <a name="input_folders_parent"></a> [folders_parent](#input_folders_parent)       | n/a         | `list(string)` | `[]`    |    no    |
+| <a name="input_org"></a> [org](#input_org)                                        | n/a         | `string`       | n/a     |   yes    |
+| <a name="input_sub_folder_child"></a> [sub_folder_child](#input_sub_folder_child) | n/a         | `list(string)` | `[]`    |    no    |
+
+## Outputs
+
+| Name                                                                       | Description                           |
+| -------------------------------------------------------------------------- | ------------------------------------- |
+| <a name="output_folder_child"></a> [folder_child](#output_folder_child)    | Devuelve el listado de carpetas hijo  |
+| <a name="output_folder_parent"></a> [folder_parent](#output_folder_parent) | Devuelve el listado de carpetas padre |
+
+<!-- END_TF_DOCS -->

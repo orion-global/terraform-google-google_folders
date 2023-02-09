@@ -7,15 +7,17 @@ on:
       - prod
 
 env:
-  TF_VAR_GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-  TF_VAR_ORGANIZACION: ${{ secrets.ORGANIZACION }}
-
+  TF_VAR_GOOGLE_CREDENTIALS: ${{ secrets.DEV_GOOGLE_CREDS }}
+  TF_VAR_ORGANIZACION: ${{ secrets.DEV_GOOGLE_ORG }}
 
 jobs:
   plan_job:
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
     runs-on: ubuntu-latest
     name: "Plan phase"
+    defaults:
+      run:
+        working-directory: ./test
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -31,15 +33,15 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform -chdir="./test" init
+        run: terraform init
 
       - name: Terraform Validate
         id: validate
-        run: terraform -chdir="./test" validate -no-color
+        run: terraform validate -no-color
 
       - name: Terraform Plan
         id: plan
-        run: terraform -chdir="./test" plan -no-color -compact-warnings
+        run: terraform plan -no-color -compact-warnings
         continue-on-error: true
 
       - name: "Comment on PR"

@@ -13,10 +13,3 @@ variable "folders_child" {
 
   ]
 }
-variable "sub_folder_child" {
-  type = list(string)
-  default = [
-
-  ]
-}
-

@@ -7,3 +7,7 @@ terraform {
     }
   }
 }
+
+provider "google" {
+  credentials = var.GOOGLE_CREDENTIALS
+}

@@ -1,6 +1,6 @@
-module "folder" {
-  source         = "../../terraform-google-google_folders"
-  org            = var.ORGANIZACION
-  folders_parent = ["PROD"]
-  folders_child  = ["networking", "storage"]
+output "folders_parent" {
+  value = module.folder.folder_parent.*
+}
+output "folders_child" {
+  value = module.folder.folder_child.*
 }
